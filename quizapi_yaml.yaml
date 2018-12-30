@@ -1,0 +1,385 @@
+openapi: 3.0.0
+info:
+  version: "0.1"
+  title: "DNB Quiz Application API"
+
+paths:
+  /contactinfo:
+    post:
+      summary: "Save contact info of user"
+      description: "Saves provided contact information associated with user identity"
+      tags:
+        - Contact info
+      requestBody:
+        description: "Contact info object"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInfo'
+      responses:
+        201:
+          description: "CREATED"
+  
+  /identity:
+    post:
+      summary: "Create and get user ID"
+      description: "Creates and returns a unique user ID, equivalent to a session ID that's tied to the user's various resources"
+      tags:
+        - Identity
+      responses:
+        201:
+          description: "CREATED"
+          content:
+            application/json:
+              schema:
+                type: "integer"
+                example: "1"
+                
+  
+  /questions:
+    get:
+      summary: "Get all questions of difficulty"
+      description: ""
+      tags:
+        - Questions
+      parameters:
+      - name: "difficulty"
+        in: "query"
+        description: "Difficulty of requested questions"
+        required: true
+        schema:
+          type: "string"
+          enum:
+            - EASY
+            - MEDIUM
+            - HARD
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuizQuestion"
+                
+    post:
+      summary: "Save question to database"
+      description: ""
+      tags:
+        - Questions
+      requestBody:
+        description: "Question object, and all associated answers"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuizQuestionRequest'
+      responses:
+        201:
+          description: "CREATED"
+
+  /questions/{questionId}:
+    get:
+      summary: "Get question"
+      description: ""
+      tags:
+        - Questions
+      parameters:
+      - name: "questionId"
+        in: "path"
+        description: "ID of requested question."
+        required: true
+        schema:
+          type: "string"
+          format: int64
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuizQuestion"
+  
+  /questions/difficulties:
+    get:
+      summary: "Get all available difficulties"
+      description: "Returns all available difficulties. Default values are EASY, MEDIUM, HARD"
+      tags:
+        - Questions
+      parameters:
+      - name: "questionId"
+        in: "path"
+        description: "ID of requested question."
+        required: true
+        schema:
+          type: "string"
+          format: int64
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "string"
+                enum: 
+                - EASY
+                - MEDIUM
+                - HARD
+                example: [EASY, MEDIUM, HARD]
+                
+  /registration:
+    post:
+      summary: "Create and get registration ID"
+      description: "Creates and returns a unique registration ID, used to associate answers with the user"
+      tags:
+        - Registration
+      requestBody:
+        description: "Registration reqeust object"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequest'
+      responses:
+        201:
+          description: "CREATED"
+          content:
+            application/json:
+              schema:
+                type: "integer"
+                example: "1"
+                
+  /registration/{registrationId}:
+    get:
+      summary: "Get registration"
+      description: "Retruns registration with registration ID, and associated responses."
+      tags:
+        - Registration
+      parameters:
+      - name: "registrationId"
+        in: "path"
+        description: "ID of registration which score should be calculated."
+        required: true
+        schema:
+          type: "string"
+          format: int64
+      responses:
+        201:
+          description: "CREATED"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Registration"
+
+  /response:
+    post:
+      summary: "Save response"
+      description: "Creates response with associated IDs. Will only accept responses where the answerId is related to the questionId. If response with the same registrationId and questionId exists, it will be overwritten by the new value."
+      tags:
+        - Response
+      requestBody:
+        description: "Response object"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuizResponse'
+      responses:
+        201:
+          description: "CREATED"
+
+  /score/{registrationId}:
+    get:
+      summary: "Get score for registration"
+      description: "Calculates and returns the score for the provided registration. Score will not be available nor calculated if this endpoint is not called first."
+      tags:
+        - Score
+      parameters:
+      - name: "registrationId"
+        in: "path"
+        description: "ID of registration which score should be calculated."
+        required: true
+        schema:
+          type: "string"
+          format: int64
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuizScore"
+            
+  /score/leaderboard/{difficulty}:
+    get:
+      summary: "Get top 10 scores of difficulty"
+      description: "Returns a sorted array of the top 10 calculated scores, in descending order. Will only include scores that have been submitted."
+      tags:
+        - Score
+      parameters:
+      - name: "difficulty"
+        in: "path"
+        description: "Difficulty of scores to be listed."
+        required: true
+        schema:
+          type: "string"
+          enum:
+            - EASY
+            - MEDIUM
+            - HARD
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/LeaderboardEntry"
+  
+components:
+  schemas:
+    ContactInfo:
+      type: "object"
+      properties:
+        identityId:
+          type: "integer"
+          description: "User ID tied to contact info"
+        fullName:
+          type: "string"
+          description: "Full name of user"
+        email:
+          type: "string"
+          description: "Email address of user"
+        mobile:
+          type: "string"
+          description: "Mobile phone number of user"
+        contact:
+          type: "boolean"
+          description: "Whether the user agreed to being contacted outside of contests"
+          
+    LeaderboardEntry:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          description: "User nickname of associated registration"
+        score:
+          type: "integer"
+          description: "Score of associated registration and score"
+          
+    QuizAnswer:
+      type: "object"
+      properties:
+        id: 
+          type: "integer"
+          description: "Answer id"
+        description:
+          type: "string"
+          description: "The full answer text"
+          
+    QuizResponse:
+      type: "object"
+      properties:
+        registrationId:
+          type: "integer"
+          description: "Id of associated registration"
+        questionId:
+          type: "integer"
+          description: "Id of answered question"
+        answerId:
+          type: "integer"
+          description: "Id of selected answer"
+          
+    QuizScore:
+      type: "object"
+      properties:
+        score:
+          type: "integer"
+          description: "Score of associated registration"
+          
+    QuizQuestion:
+      type: "object"
+      properties:
+        id: 
+          type: "integer"
+          description: "Question id"
+        description:
+          type: "string"
+          description: "The full question text"
+        difficulty:
+          type: "string"
+          description: "Difficulty of question"
+        answers:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/QuizAnswer"
+    
+    QuizQuestionRequest:
+      type: "object"
+      properties:
+        description:
+          type: "string"
+          description: "The full question text"
+        difficulty:
+          type: "string"
+          description: "Difficulty of question"
+        answers:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id: 
+                type: "integer"
+                description: "Answer id"
+              description:
+                type: "string"
+                description: "The full answer text"
+              isCorrect:
+                type: "string"
+                description: "Whether the answer is correct. Is not sent to the client"
+    
+    Registration:
+      type: "object"
+      properties:
+        id: 
+          type: "integer"
+          description: "Registration id"
+        identityId:
+          type: "integer"
+          description: "Identity id"
+        name:
+          type: "string"
+          description: "Nickname that will be shown on leaderboard"
+        difficulty:
+          type: "string"
+          description: "Difficulty of question"
+          enum:
+            - EASY
+            - MEDIUM
+            - HARD
+        responses:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/QuizResponse"
+        timestamp:
+          type: "string"
+          description: "LocalDateTime timestamp of registration time"
+          
+    RegistrationRequest:
+      type: "object"
+      properties:
+        identityId:
+          type: "integer"
+          description: "Identity id"
+        name:
+          type: "string"
+          description: "Nickname that will be shown on leaderboard"
+        difficulty:
+          type: "string"
+          description: "Difficulty of question"
+          enum:
+            - EASY
+            - MEDIUM
+            - HARD
+
