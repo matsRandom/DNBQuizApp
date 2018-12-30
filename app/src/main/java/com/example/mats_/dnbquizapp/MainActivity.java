@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     String userId="0";
     String tag = "MainActivity";
 
+    //goes to new Activity
     public void registrer(){
         Log.i(tag,"register");
         Intent intent = new Intent(this, RegisterUser.class);
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     registrer();
                 }
             }
-
         }catch (Exception e){
             Log.i(tag,"userIdFailed");
             e.printStackTrace();
