@@ -43,6 +43,7 @@ public class TakeQuiz extends AppCompatActivity {
     int arrayIndex;
 
     public void score(){
+        arrayIndex = 0;
         Intent intent = new Intent(this,Score.class);
         startActivity(intent);
     }
