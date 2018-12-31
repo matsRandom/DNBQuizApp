@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public void register(){
         Log.i(tag,"register");
         Intent intent = new Intent(this, RegisterUser.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Log.i(tag,"userid"+userId);
         startActivity(intent);
     }

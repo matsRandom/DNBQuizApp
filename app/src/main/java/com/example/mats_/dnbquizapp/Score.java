@@ -21,11 +21,13 @@ TextView scoreTextView;
 
     public void options(View view){
         Intent intent = new Intent(this, Options.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     public void takeQuiz(View view){
         Intent intent = new Intent(this, TakeQuiz.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

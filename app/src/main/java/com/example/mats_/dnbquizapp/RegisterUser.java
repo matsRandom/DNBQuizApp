@@ -29,7 +29,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     EditText editText;
     String difficulty;
     String tag = "MainActivity";
-    String registrationId="0";
+    String registrationId = "0";
 
     //Hides the keyboard when user taps on something else
     @Override
@@ -58,48 +58,49 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         return json;
     }
 
-    public void quiz(){
+    public void options(){
         Intent intent = new Intent(this,Options.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Log.i(tag,difficulty);
         startActivity(intent);
     }
 
     public void register(View view){
         Log.i(tag,"register");
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://devbugger.com/")
-                    .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://devbugger.com/")
+                .build();
 
-            String name = editText.getText().toString();
-            Log.i(tag,"name");
+        String name = editText.getText().toString();
+        Log.i(tag,"name");
 
-            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),setRequestBody(name,difficulty));
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),setRequestBody(name,difficulty));
 
-            Api api = retrofit.create(Api.class);
-            api.register(requestBody).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    try {
-                        Log.i(tag,"registrer(body)");
-                        registrationId = response.body().string();
-                        Log.i(tag,"registrerid"+registrationId);
+        Api api = retrofit.create(Api.class);
+        api.register(requestBody).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Log.i(tag,"registrer(body)");
+                    registrationId = response.body().string();
+                    Log.i(tag,"registrerid"+registrationId);
 
-                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.mats_.dnbquizapp", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.mats_.dnbquizapp", Context.MODE_PRIVATE);
 
-                        sharedPreferences.edit().putString("registrationId", registrationId).apply();
-                        sharedPreferences.edit().putString("difficulty", difficulty).apply();
-                        Log.i(tag,sharedPreferences.getString("registrationId","0"));
-                        quiz();
-                    } catch (Exception e) {
-                        Log.i(tag,"responsebody failed");
-                        e.printStackTrace();
-                    }
+                    sharedPreferences.edit().putString("registrationId", registrationId).apply();
+                    sharedPreferences.edit().putString("difficulty", difficulty).apply();
+                    Log.i(tag,sharedPreferences.getString("registrationId","0"));
+                    options();
+                } catch (Exception e) {
+                    Log.i(tag,"responsebody failed");
+                    e.printStackTrace();
                 }
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.i(tag, "resopnseFailed");
-                }
-            });
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i(tag, "resopnseFailed");
+            }
+        });
     }
 
 
