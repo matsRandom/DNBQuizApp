@@ -20,7 +20,7 @@ public interface Api {
 
     //Registration
     @POST("kq/registration")
-    Call<ResponseBody> registrer(@Body RequestBody requestBody);
+    Call<ResponseBody> register(@Body RequestBody requestBody);
 
     @GET("kq//registration/{id}")
     Call<ResponseBody> getRegistration(@Path("id") int id);

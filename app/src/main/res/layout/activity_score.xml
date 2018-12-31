@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners"
         android:fontFamily="casual"
-        android:onClick="takeQuizz"
+        android:onClick="takeQuiz"
         android:text="Take the quizz again"
         android:textAlignment="center"
         android:textAllCaps="true"

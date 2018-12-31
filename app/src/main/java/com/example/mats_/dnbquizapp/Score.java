@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import okhttp3.ResponseBody;
@@ -21,12 +20,12 @@ String tag = "Mainactivity";
 TextView scoreTextView;
 
     public void options(View view){
-        Intent intent = new Intent(this, Quizz.class);
+        Intent intent = new Intent(this, Options.class);
         startActivity(intent);
     }
 
-    public void takeQuizz(View view){
-        Intent intent = new Intent(this, TakeQuizz.class);
+    public void takeQuiz(View view){
+        Intent intent = new Intent(this, TakeQuiz.class);
         startActivity(intent);
     }
 

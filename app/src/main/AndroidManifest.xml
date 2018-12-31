@@ -21,8 +21,8 @@
         <activity android:name=".Leaderboard" />
         <activity android:name=".Score" />
         <activity android:name=".RegisterUser" />
-        <activity android:name=".Quizz" />
-        <activity android:name=".TakeQuizz"></activity>
+        <activity android:name=".Options" />
+        <activity android:name=".TakeQuiz"></activity>
     </application>
 
 </manifest>

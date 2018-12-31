@@ -12,8 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.text.MessageFormat;
-
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -46,13 +44,13 @@ public class RegisterUser extends AppCompatActivity {
         return json;
     }
 
-    public void quizz(){
-        Intent intent = new Intent(this,Quizz.class);
+    public void quiz(){
+        Intent intent = new Intent(this,Options.class);
         Log.i(tag,difficulty);
         startActivity(intent);
     }
 
-    public void registrer(View view){
+    public void register(View view){
         Log.i(tag,"register");
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://devbugger.com/")
@@ -64,7 +62,7 @@ public class RegisterUser extends AppCompatActivity {
             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),setRequestBody(name,difficulty));
 
             Api api = retrofit.create(Api.class);
-            api.registrer(requestBody).enqueue(new Callback<ResponseBody>() {
+            api.register(requestBody).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
@@ -77,7 +75,7 @@ public class RegisterUser extends AppCompatActivity {
                         sharedPreferences.edit().putString("registrationId", registrationId).apply();
                         sharedPreferences.edit().putString("difficulty", difficulty).apply();
                         Log.i(tag,sharedPreferences.getString("registrationId","0"));
-                        quizz();
+                        quiz();
                     } catch (Exception e) {
                         Log.i(tag,"responsebody failed");
                         e.printStackTrace();

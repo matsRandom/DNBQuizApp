@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class TakeQuizz extends AppCompatActivity {
+public class TakeQuiz extends AppCompatActivity {
     String difficulty = "EASY";
     String tag = "MainActivity";
 
@@ -124,7 +123,7 @@ public class TakeQuizz extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_take_quizz);
+        setContentView(R.layout.activity_take_quiz);
         listView = findViewById(R.id.listViewId1);
         arrayIndex=0;
         getQuestions();

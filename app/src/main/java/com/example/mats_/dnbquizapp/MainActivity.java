@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
     String userId="0";
     String tag = "MainActivity";
 
-    //goes to new Activity
-    public void registrer(){
+
+    public void register(){
         Log.i(tag,"register");
         Intent intent = new Intent(this, RegisterUser.class);
         Log.i(tag,"userid"+userId);
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
                         sharedPreferences.edit().putString("userId", userId).apply();
                         Log.i(tag, sharedPreferences.getString("userId","0"));
-                        registrer();
+                        register();
                     } catch (Exception e) {
                         Log.i(tag,"postUser()FAIL");
                         e.printStackTrace();
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }else{
-            registrer();
+            register();
         }
     }
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             userId = sharedPreferences.getString("userId", "0");
                 Log.i(tag,"userId"+userId);
                 if(!Objects.equals(userId,"0")){
-                    registrer();
+                    register();
                 }
             }
         }catch (Exception e){

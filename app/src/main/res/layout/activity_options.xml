@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".Quizz">
+    tools:context=".Options">
 
     <TextView
         android:id="@+id/textView8"
@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners"
         android:fontFamily="casual"
-        android:onClick="takeQuizz"
-        android:text="Take Quizz"
+        android:onClick="takeQuiz"
+        android:text="Take Quiz"
         android:textColor="@android:color/background_light"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
