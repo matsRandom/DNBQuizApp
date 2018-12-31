@@ -30,7 +30,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="casual"
-        android:text="Which of the following best describes the function of git?"
+        android:text="Finding questions and answers.."
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="23sp"
