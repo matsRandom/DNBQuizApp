@@ -43,7 +43,7 @@ TextView scoreTextView;
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                try{
-                   String score = response.body().string() + " / 30" ;
+                   String score = response.body().string();
                    scoreTextView.setText(score);
 
                    Log.i(tag,"score"+ score);

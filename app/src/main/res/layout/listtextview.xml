@@ -9,5 +9,5 @@
     android:textStyle="bold"
     android:textAlignment="center"
     android:textColor="@android:color/background_light"
-    android:textSize="26dp"
+    android:textSize="26sp"
      />

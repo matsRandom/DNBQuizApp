@@ -74,7 +74,7 @@ public class TakeQuiz extends AppCompatActivity {
             }catch (Exception e){
                 e.printStackTrace();
             }
-        }else{
+        }else if(i==jsonArray.length()){
             score();
         }
     }

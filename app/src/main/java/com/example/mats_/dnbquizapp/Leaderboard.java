@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,10 @@ public class Leaderboard extends AppCompatActivity {
                    JSONArray jsonArray = new JSONArray(response.body().string());
 
                     for (int i=0; i<jsonArray.length(); i++){
-                        arrayList.add(jsonArray.getString(i));
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String name = jsonObject.getString("name");
+                        String score = jsonObject.getString("score");
+                        arrayList.add(name + " : " + score);
                     }
                     arrayAdapter.notifyDataSetChanged();
 
