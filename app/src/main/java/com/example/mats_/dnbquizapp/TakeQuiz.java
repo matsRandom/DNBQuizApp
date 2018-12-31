@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,6 +38,7 @@ public class TakeQuiz extends AppCompatActivity {
 
     ArrayAdapter<String> arrayAdapter;
     ListView listView;
+
     //updated each time someone answers a question
     int arrayIndex;
 
@@ -45,10 +47,10 @@ public class TakeQuiz extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void update(int posistion){
+    public void update(int position){
         arrayIndex++;
+        postResponse(position);
         setQuestions(arrayIndex);
-        postResponse(posistion);
     }
 
     public void setQuestions(int i){
@@ -151,8 +153,8 @@ public class TakeQuiz extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    String liste = response.body().string();
-                    jsonArray = new JSONArray(liste);
+                    String list = response.body().string();
+                    jsonArray = new JSONArray(list);
                     setQuestions(arrayIndex);
 
                 } catch (Exception e) {
