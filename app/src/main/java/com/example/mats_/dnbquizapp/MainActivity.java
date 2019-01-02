@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -52,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(tag, sharedPreferences.getString("userId","0"));
                         register();
                     } catch (Exception e) {
-                        Log.i(tag,"postUser()FAIL");
+                        Toast.makeText(getApplicationContext(),"Failed to set userID, an error occurred",Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.i("Retrofitfailed", "failed");
+                    Toast.makeText(getApplicationContext(),"Failed to get userID, the internet might be off",Toast.LENGTH_SHORT).show();
                 }
             });
         }else{

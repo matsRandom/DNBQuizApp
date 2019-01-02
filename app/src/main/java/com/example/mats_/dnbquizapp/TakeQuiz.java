@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -117,6 +118,7 @@ public class TakeQuiz extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(),"Failed to save questions, the internet might be off",Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -159,11 +161,13 @@ public class TakeQuiz extends AppCompatActivity {
                     setQuestions(arrayIndex);
 
                 } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),"Failed to get questions, an error occurred",Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Failed to get questions, the internet might be off",Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -50,14 +51,15 @@ TextView scoreTextView;
 
                    Log.i(tag,"score"+ score);
                }catch (Exception e){
+                   Toast.makeText(getApplicationContext(),"Failed to get score, an error occurred",Toast.LENGTH_SHORT).show();
                    e.printStackTrace();
-                   Log.i(tag,"scoreFailed");
                }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i(tag, "scoreResponseFailed");
+                Toast.makeText(getApplicationContext(),"Failed to get score, the internet might be off",Toast.LENGTH_SHORT).show();
+
             }
         });
 

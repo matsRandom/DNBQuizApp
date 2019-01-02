@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,12 +49,14 @@ public class Leaderboard extends AppCompatActivity {
                     arrayAdapter.notifyDataSetChanged();
 
                 }catch (Exception e){
+                    Toast.makeText(getApplicationContext(),"Failed to set Leaderboard, an error occured",Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Failed to get Leaderboard, the internet might be off",Toast.LENGTH_SHORT).show();
 
             }
         });

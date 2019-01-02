@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -92,13 +93,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     Log.i(tag,sharedPreferences.getString("registrationId","0"));
                     options();
                 } catch (Exception e) {
-                    Log.i(tag,"responsebody failed");
+                    Toast.makeText(getApplicationContext(),"Failed to register, an error occurred",Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i(tag, "resopnseFailed");
+                Toast.makeText(getApplicationContext(),"Failed to register, the internet might be off",Toast.LENGTH_SHORT).show();
             }
         });
     }
