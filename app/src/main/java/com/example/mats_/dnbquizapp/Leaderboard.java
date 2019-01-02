@@ -7,12 +7,9 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,8 +58,6 @@ public class Leaderboard extends AppCompatActivity {
             }
         });
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

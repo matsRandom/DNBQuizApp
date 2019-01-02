@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import java.util.Objects;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,21 +16,15 @@ import retrofit2.Retrofit;
 
 
 public class MainActivity extends AppCompatActivity {
-    String userId="0";
-    String tag = "MainActivity";
-
+    String userId;
 
     public void register(){
-        Log.i(tag,"register");
         Intent intent = new Intent(this, RegisterUser.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Log.i(tag,"userid"+userId);
         startActivity(intent);
     }
 
     public void setUserId(View view){
-        Log.i(tag,"setUserId");
-
         if (Objects.equals(userId,"0")){
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://devbugger.com/")
@@ -44,13 +35,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
-                        Log.i(tag,"postUser()");
                         userId = response.body().string();
-                        Log.i(tag, "userid)set"+userId);
                         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.mats_.dnbquizapp", Context.MODE_PRIVATE);
-
                         sharedPreferences.edit().putString("userId", userId).apply();
-                        Log.i(tag, sharedPreferences.getString("userId","0"));
                         register();
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(),"Failed to set userID, an error occurred",Toast.LENGTH_SHORT).show();
@@ -67,25 +54,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        userId = "0";
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.mats_.dnbquizapp", Context.MODE_PRIVATE);
-        try {
-            Log.i(tag,"startingShared");
-            if(sharedPreferences.contains("userId")){
+        if(sharedPreferences.contains("userId")){
             userId = sharedPreferences.getString("userId", "0");
-                Log.i(tag,"userId"+userId);
-                if(!Objects.equals(userId,"0")){
+            if(!Objects.equals(userId,"0")){
                     register();
-                }
             }
-        }catch (Exception e){
-            Log.i(tag,"userIdFailed");
-            e.printStackTrace();
         }
     }
 }
